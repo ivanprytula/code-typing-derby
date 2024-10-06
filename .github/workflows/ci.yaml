@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: multistage.Dockerfile
-          tags: code-typing-derby-multistage:${GITHUB_SHA:0:7}
+          tags: code-typing-derby-multistage:latest
           cache-from: type=gha,scope=code-typing-derby-multistage
           cache-to: type=gha,mode=min,scope=code-typing-derby-multistage
           outputs: type=docker,dest=/tmp/code-typing-derby-multistage.tar
@@ -62,7 +62,7 @@ jobs:
           docker compose down
 
       - name: Test command line (multistage)
-        run: docker run code-typing-derby-multistage:${GITHUB_SHA:0:7} hello
+        run: docker run code-typing-derby-multistage:latest hello
 
   # deploy:
   #   name: "deploy image"
