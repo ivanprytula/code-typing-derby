@@ -1,0 +1,22 @@
+[project]
+name = "code-typing-derby"
+version = "0.1.0"
+description = "Mastering programming languages syntax and idioms"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi[standard]>=0.115",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project.scripts]
+hello = "code_typing_derby:hello"
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.6.7",
+    "fastapi-cli>=0.0.5",
+]
