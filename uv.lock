@@ -51,25 +51,25 @@ wheels = [
 [[package]]
 name = "code-typing-derby"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["standard"] },
+    { name = "ruff" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "fastapi-cli" },
-    { name = "ruff" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "fastapi", extras = ["standard"], specifier = ">=0.115" }]
+requires-dist = [
+    { name = "fastapi", extras = ["standard"], specifier = ">=0.115" },
+    { name = "ruff", specifier = ">=0.6.9" },
+]
 
 [package.metadata.requires-dev]
-dev = [
-    { name = "fastapi-cli", specifier = ">=0.0.5" },
-    { name = "ruff", specifier = ">=0.6.7" },
-]
+dev = [{ name = "fastapi-cli", specifier = ">=0.0.5" }]
 
 [[package]]
 name = "colorama"
