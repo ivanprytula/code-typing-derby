@@ -38,7 +38,7 @@ jobs:
       - name: Upload artifact (multistage)
         uses: actions/upload-artifact@v4
         with:
-          name: code-typing-derby-multistage
+          name: ${{ env.IMAGE_NAME }}
           path: /tmp/${{ env.IMAGE_NAME }}.tar
 
   test:
@@ -79,7 +79,7 @@ jobs:
   #       with:
   #         cluster-name: ${{ env.EKS_CLUSTER_NAME }}
   #         kubeconfig: ${{ env.EKS_KUBECONFIG }}
-  #         manifest: /tmp/code-typing-derby-multistage.tar
+  #         manifest: /tmp/${{ env.IMAGE_NAME }}.tar
   #       env:
   #         AWS_REGION: ${{ secrets.AWS_REGION }}
   #         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
