@@ -6,6 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: code-typing-derby
+
 concurrency:
   group:
     ${{ github.workflow }}-${{ github.ref_name }}-${{
@@ -27,16 +30,16 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: multistage.Dockerfile
-          tags: code-typing-derby-multistage:latest
-          cache-from: type=gha,scope=code-typing-derby-multistage
-          cache-to: type=gha,mode=min,scope=code-typing-derby-multistage
-          outputs: type=docker,dest=/tmp/code-typing-derby-multistage.tar
+          tags: ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha,scope=code-typing-derby
+          cache-to: type=gha,mode=min,scope=code-typing-derby
+          outputs: type=docker,dest=/tmp/${{ env.IMAGE_NAME }}.tar
       
       - name: Upload artifact (multistage)
         uses: actions/upload-artifact@v4
         with:
           name: code-typing-derby-multistage
-          path: /tmp/code-typing-derby-multistage.tar
+          path: /tmp/${{ env.IMAGE_NAME }}.tar
 
   test:
     name: "test image"
@@ -48,12 +51,12 @@ jobs:
       - name: Download artifact (multistage)
         uses: actions/download-artifact@v4
         with:
-          name: code-typing-derby-multistage
+          name: ${{ env.IMAGE_NAME }}
           path: /tmp
 
       - name: Load images
         run: |
-          docker load --input /tmp/code-typing-derby-multistage.tar
+          docker load --input /tmp/${{ env.IMAGE_NAME }}.tar
           docker image ls -a
 
       - name: Test Docker compose
@@ -62,7 +65,7 @@ jobs:
           docker compose down
 
       - name: Test command line (multistage)
-        run: docker run code-typing-derby-multistage:latest hello
+        run: docker run ${{ env.IMAGE_NAME }}:latest hello
 
   # deploy:
   #   name: "deploy image"
